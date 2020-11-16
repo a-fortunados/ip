@@ -178,14 +178,24 @@ function palabraDescubierta($coleccionLetras)
 }
 
 /**
- * Completar documentacion
+ * Esta funcion solicita al usuario una letra que luego en otros modulos se le aplicara diferentes funciones para asi verifcar su existencia en la palabra
+ * Como asi tambien se la utilizara para destaprar un caracter oculto dentro de la palabra
+ * @return string $letra;
  */
 function solicitarLetra()
 {
+    // Declaracion de variables
+    // boolean $letraCorrecta
+    // String $letra
+
+    // Inicializacion de variables
     $letraCorrecta = false;
+
     do {
         echo "Ingrese una letra: ";
-        $letra = strtolower(trim(fgets(STDIN)));
+        $letra = strtolower(trim(fgets(STDIN))); // Se fuerza que la letra ingresada este en minusculas
+
+        // Si se ingresa 0 o mas de un caracter arroja error, de lo contrario es una letra correcta
         if (strlen($letra) != 1) {
             echo "Debe ingresar 1 letra!\n";
         } else {
