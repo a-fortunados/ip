@@ -100,7 +100,7 @@ function existePalabra($coleccionPalabras, $palabra)
 
     // Inicializacion de variables
     $i = 0;
-    $cantPal = count($coleccionPalabras);
+    $cantPal = count($coleccionPalabras); // Le asigno la longitud del arreglo de palabras
     $existe = false;
 
     // Recorro el arreglo de forma parcial, frena en el momento que se encuentre la palabra solicitada
