@@ -144,25 +144,35 @@ function existeLetra($coleccionLetras, $letra)
 /*>>> Completar la interfaz y cuerpo de la función. Debe respetar la documentación <<<*/
 
 /**
- * Obtener indice aleatorio
- * Completar documentacion
+ * Esta funcion obtiene un indice aleatorio del arreglo de palabras
+ * @param array $coleccionPalabras
+ * @return int $i
  */
-function indiceAleatorioEntre($min, $max)
+function indiceAleatorioEntre($coleccionPalabras)
 {
     /**
      * Para utilizar la primer opcion del menu de usuario (palabra aleatoria) se va a generar un numero aleatorio correspondiente a la cantidad de palabras que hay disponibles
      * Para esto, se va a utilizar la funcion rand. Esta funciom genera un numero entero aleatorio entre otros dos incluidos
      * Por ejemplo, rand(3, 9) va arrojar un numero aleatorio entre 3 y 9 incluidos
      */
-    $i = rand($min, $max); // /*>>> documente qué hace la función rand según el manual php.net en internet <<<*/
-    return $i;
+
+    // Declaracion de variables
+    // int $i, $min, $max
+
+    // Inicializacion de variables
+    $min = 0;
+    $max = count($coleccionPalabras); // Le asigno la longitud del arreglo ya que va a ser el margen maximo de eleccion de indice
+
+    $i = rand($min, $max); // Le asigno a $i un numero aleatorio entre el minimo y maximo
+
+    return $i; // Retorno el indice aleatorio
 }
 
 /**
  * solicitar un valor entre min y max
  * @param int $min
  * @param int $max
- * @return int
+ * @return int $i
  */
 function solicitarIndiceEntre($min, $max)
 {
