@@ -78,7 +78,7 @@ function seleccionarOpcion()
     echo "7) Mostrar la lista de palabras ordenada por orden alfabético. \n";
     echo "0) Salir del programa. \n";
 
-    /*>>> Además controlar que la opción elegida es válida. Puede que el usuario se equivoque al elegir una opción <<<*/
+    // Se conmtrola la opcion ingresada desde el programa principal en el switch correspondiente
 
     echo "--------------------------------------------------------------\n";
     echo "Ingrese una opcion: ";
@@ -90,13 +90,21 @@ function seleccionarOpcion()
  * Determina si una palabra existe en el arreglo de palabras
  * @param array $coleccionPalabras
  * @param string $palabra
- * @return boolean
+ * @return boolean $existe
  */
 function existePalabra($coleccionPalabras, $palabra)
 {
+    // Declaracion de variables
+    // int $i, $cantPal
+    // boolean $existe
+
+    // Inicializacion de variables
     $i = 0;
     $cantPal = count($coleccionPalabras);
     $existe = false;
+
+    // Recorro el arreglo de forma parcial, frena en el momento que se encuentre la palabra solicitada
+    // Si existe, retorna true, de lo contrario false
     while ($i < $cantPal && !$existe) {
         $existe = $coleccionPalabras[$i]["palabra"] == $palabra;
         $i++;
