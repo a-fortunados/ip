@@ -109,15 +109,22 @@ function existePalabra($coleccionPalabras, $palabra)
  * Determina si una letra existe en el arreglo de letras
  * @param array $coleccionLetras
  * @param string $letra
- * @return boolean
+ * @return boolean $existe
  */
 function existeLetra($coleccionLetras, $letra)
 {
+    // Inicializo variables
+    $existe = false;
+
+    // Recorro el arreglo de manera exahustiva para corroborar la existencia de la letra dentro del mismo
+    // Si existe retorna true
     for ($i = 0; $i < count($coleccionLetras); $i++) {
-
+        if ($coleccionLetras[$i] == $letra) {
+            $existe = true;
+        }
     }
-    /*>>> Completar cuerpo de la función <<<*/
 
+    return $existe;
 }
 
 /**
