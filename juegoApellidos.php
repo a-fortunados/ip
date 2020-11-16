@@ -76,7 +76,7 @@ function seleccionarOpcion()
     echo "5) Mostrar la información completa del primer juego con más puntaje. \n";
     echo "6) Mostrar la información completa del primer juego que supere un puntaje. \n";
     echo "7) Mostrar la lista de palabras ordenada por orden alfabético. \n";
-    echo "0) Jugar con una palabra aleatoria. \n";
+    echo "0) Salir del programa. \n";
 
     /*>>> Además controlar que la opción elegida es válida. Puede que el usuario se equivoque al elegir una opción <<<*/
 
