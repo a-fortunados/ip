@@ -47,8 +47,8 @@ function cargarJuegos()
 }
 
 /**
- * Esta funcion a partir de la palabra recibida por parametro genera un arreglo asociativo para determinar si sus letras fueron o no descubiertas
- * Además, se recorre a la palabra y se separa en letras dentro de un nuevo arreglo
+ * Esta funcion a partir de la palabra recibida por parametro genera un arreglo asociativo de las letras de la palabra en juego
+ * Para esto se recorre a la palabra y se separa en letras tapandolas con un * en la posicion de la misma
  * @param string $palabra
  * @return array $letras
  */
