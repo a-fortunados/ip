@@ -63,7 +63,7 @@ function dividirPalabraEnLetras($palabra)
 }
 
 /**
- * Esta funcion muestra por pantalla el menu de usuario y obtiene una opcion de menú ***válida***
+ * Esta funcion muestra por pantalla el menu de usuario y obtiene una opcion de menú
  * @return int $opcion
  */
 function seleccionarOpcion()
