@@ -54,12 +54,20 @@ function cargarJuegos()
  */
 function dividirPalabraEnLetras($palabra)
 {
+    // Declaracion de variables
+    // int $cantLetras. $i
 
-    /*>>> Completar para generar la estructura de datos b) indicada en el enunciado.
-    recuerde que los string pueden ser recorridos como los arreglos.  <<<*/
+    // Inicializacion de variables
+    $letras = [];
+    $cantLetras = strlen($palabra); // Le asigno la longitud de la palabra en juego
 
-    // TODO: Se tiene guardar la longitud de la palabra en una variable para asi armar un arreglo con cada letra de la palabra en la posicion correspondiente del mismo
+    // Recorro la palabra en juego y voy colocando su letras en un nuevo arreglo
+    for ($i = 0; $i < $cantLetras; $i++) {
+        $letras[$i]["letra"] = $palabra[$i];
+        $letras[$i]["descubierta"] = false;
+    }
 
+    return $letras;
 }
 
 /**
@@ -78,7 +86,7 @@ function seleccionarOpcion()
     echo "7) Mostrar la lista de palabras ordenada por orden alfabético. \n";
     echo "0) Salir del programa. \n";
 
-    // Se conmtrola la opcion ingresada desde el programa principal en el switch correspondiente
+    // Se controla la opcion ingresada desde el programa principal en el switch correspondiente
 
     echo "--------------------------------------------------------------\n";
     echo "Ingrese una opcion: ";
@@ -145,10 +153,11 @@ function existeLetra($coleccionLetras, $letra)
 
 /**
  * Esta funcion obtiene un indice aleatorio del arreglo de palabras
- * @param array $coleccionPalabras
+ * @param int $min
+ * @param int $max
  * @return int $i
  */
-function indiceAleatorioEntre($coleccionPalabras)
+function indiceAleatorioEntre($min, $max)
 {
     /**
      * Para utilizar la primer opcion del menu de usuario (palabra aleatoria) se va a generar un numero aleatorio correspondiente a la cantidad de palabras que hay disponibles
@@ -157,11 +166,9 @@ function indiceAleatorioEntre($coleccionPalabras)
      */
 
     // Declaracion de variables
-    // int $i, $min, $max
+    // int $i
 
-    // Inicializacion de variables
-    $min = 0;
-    $max = count($coleccionPalabras); // Le asigno la longitud del arreglo ya que va a ser el margen maximo de eleccion de indice
+    $max = $max - 1; // Le resto 1 a $max para que rand no seleccione un indice fuera de la longitud del arreglo de palabras
 
     $i = rand($min, $max); // Le asigno a $i un numero aleatorio entre el minimo y maximo
 
@@ -178,7 +185,7 @@ function solicitarIndiceEntre($min, $max)
 {
     do {
         echo "Seleccione un valor entre $min y $max: ";
-        $i = trim(fgets(STDIN));
+        $i = (int) trim(fgets(STDIN));
     } while (!($i >= $min && $i <= $max));
 
     return $i;
@@ -263,14 +270,25 @@ function stringLetrasDescubiertas($coleccionLetras)
  */
 function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
 {
+    // Inicializacion de variables
     $pal = $coleccionPalabras[$indicePalabra]["palabra"];
     $coleccionLetras = dividirPalabraEnLetras($pal);
-    //print_r($coleccionLetras);
     $puntaje = 0;
+    $palabraFueDescubierta = false;
+
+    // Muestro por pantalla a la palabra en juego
+    for ($i = 0; $i < count($coleccionLetras); $i++) {
+        if ($coleccionLetras[$i]["descubierta"] == false) {
+            $coleccionLetras[$i]["letra"] = "*";
+            echo $coleccionLetras[$i]["letra"] . "   ";
+        }
+    }
+    echo "\n";
 
     /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
 
-    //Mostrar pista:
+    //Mostrar pista
+    echo "Pista: " . $coleccionPalabras[$indicePalabra]["pista"];
 
     //solicitar letras mientras haya intentos y la palabra no haya sido descubierta:
 
@@ -327,6 +345,15 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
     echo "\n";
 }
 
+/**
+ * Esta funcion cuenta la cantidad de elementos (palabras) que hay en el arreglo de palabras
+ * @return int $cantPalabras
+ */
+function contarElementos()
+{
+
+}
+
 /*>>> Implementar las funciones necesarias para la opcion 5 del menú <<<*/
 
 /*>>> Implementar las funciones necesarias para la opcion 6 del menú <<<*/
@@ -335,11 +362,18 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
 
 /**
  * PROGRAMA PRINCIPAL
- *
- * int $opcion
+ * array $arregloPalabras
+ * int $cantidadIntentos, $opcion, $minimoPalabras, $maximoPalabras, $numeroPalabra, $puntajeFinal
  *
  */
-define("CANT_INTENTOS", 6); //Constante en php para cantidad de intentos que tendrá el jugador para adivinar la palabra.
+// define("CANT_INTENTOS", 6); //Constante en php para cantidad de intentos que tendrá el jugador para adivinar la palabra.
+
+// Inicializacion de variables
+$cantidadIntentos = 6;
+$minimoPalabras = 0;
+$maximoPalabras = 0;
+$puntajeFinal = 0;
+$arregloPalabras = cargarPalabras(); // Le asigno el arreglo de palabras
 
 do {
     $opcion = seleccionarOpcion();
@@ -348,6 +382,9 @@ do {
             echo "Fin del juego! \n";
             break;
         case 1: // Jugar con una palabra aleatoria
+            $maximoPalabras = count($arregloPalabras);
+            $numeroPalabra = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
+            $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, $cantidadIntentos);
 
             break;
         case 2: // Jugar con una palabra elegida
