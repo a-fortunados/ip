@@ -344,25 +344,25 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             }
             echo "\n";
 
+            // Armo un string nuevo con la palabra modifica a medida que se va descubriendo y la almaceno en su variable correspondiente
+            $palabraModificada = stringLetrasDescubiertas($coleccionLetrasModificado);
+
+            // Verifico que la palabra modificada sea igual a la palabra en juego
+            if ($palabraModificada == $pal) {
+                $palabraFueDescubierta = true;
+            }
+
         } else {
             // TODO: dibujarTipito
             echo "Esa letra no está! \n";
             $cantIntentos--;
+            echo "Intentos restantes: " . $cantIntentos . "\n";
         }
-
-        $palabraModificada = stringLetrasDescubiertas($coleccionLetrasModificado);
-
-        // TODO: verificar que la palabra modificada sea igual a la palabra en juego
-
-    }
-
-    if ($palabraModificada == $pal) {
-        $palabraFueDescubierta = true;
     }
 
     if ($palabraFueDescubierta) {
         //obtener puntaje:
-
+        $puntaje = $coleccionPalabras[$indicePalabra]["puntosPalabra"] + $cantIntentos;
         echo "\n¡¡¡¡¡¡GANASTE " . $puntaje . " puntos!!!!!!\n";
     } else {
         echo "\n¡¡¡¡¡¡AHORCADO AHORCADO!!!!!!\n";
