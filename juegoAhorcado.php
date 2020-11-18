@@ -129,15 +129,21 @@ function existePalabra($coleccionPalabras, $palabra)
  */
 function existeLetra($coleccionLetras, $letra)
 {
+    // Declaracion de variables
+    // int $i
+    // boolean $existe
+
     // Inicializo variables
+    $i = 0;
     $existe = false;
 
-    // Recorro el arreglo de manera exahustiva para corroborar la existencia de la letra dentro del mismo
+    // Recorro el arreglo de manera parcial para corroborar la existencia de la letra dentro del mismo
     // Si existe retorna true
-    for ($i = 0; $i < count($coleccionLetras); $i++) {
-        if ($coleccionLetras[$i] == $letra) {
+    while ($i < count($coleccionLetras)) {
+        if ($coleccionLetras[$i]["letra"] == $letra) {
             $existe = true;
         }
+        $i++;
     }
 
     return $existe;
@@ -236,25 +242,45 @@ function solicitarLetra()
  * Descubre todas las letras de la colección de letras iguales a la letra ingresada.
  * Devuelve la coleccionLetras modificada, con las letras descubiertas
  * @param array $coleccionLetras
+ * @param array $coleccionLetrasModificado
  * @param string $letra
- * @return array colección de letras modificada.
+ * @return array $coleccionLetrasModificado
  */
-function destaparLetra($coleccionLetras, $letra)
+function destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra)
 {
+    // Declaracion de variables
+    // int $i
 
     /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
+
+    // Recorro el arreglo buscando las incidencias de la letra ingresada y remplazo el * por su letra correspondiente
+    for ($i = 0; $i < count($coleccionLetras); $i++) {
+        if ($coleccionLetras[$i]["letra"] == $letra) {
+            $coleccionLetrasModificado[$i] = $letra;
+        }
+    }
+
+    return $coleccionLetrasModificado;
 }
 
 /**
  * obtiene la palabra con las letras descubiertas y * (asterisco) en las letras no descubiertas. Ejemplo: he**t*t*s
  * @param array $coleccionLetras
- * @return string  Ejemplo: "he**t*t*s"
+ * @return string $pal Ejemplo: "he**t*t*s"
  */
 function stringLetrasDescubiertas($coleccionLetras)
 {
+    // Declaracion de variables
+    // int $i
+    // String $pal
+
+    // Inicializacion de variables
     $pal = "";
 
     /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
+    for ($i = 0; $i < count($coleccionLetras); $i++) {
+        $pal = $pal . $coleccionLetras[$i];
+    }
 
     return $pal;
 }
@@ -270,27 +296,69 @@ function stringLetrasDescubiertas($coleccionLetras)
  */
 function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
 {
+    // Declaracion de variables
+    // String $letra, $pal, $palabraModificada
+    // array $coleccionLetrasModificado, $coleccionLetras
+    // int $i, $longitudPalabra, $puntaje
+    // boolean $palabraFueDescubierta, $existeLetra
+
     // Inicializacion de variables
     $pal = $coleccionPalabras[$indicePalabra]["palabra"];
+    $palabraModificada = "";
     $coleccionLetras = dividirPalabraEnLetras($pal);
+    $longitudPalabra = count($coleccionLetras);
+    $coleccionLetrasModificado = [];
+    $existeLetra = false;
     $puntaje = 0;
     $palabraFueDescubierta = false;
 
-    // Muestro por pantalla a la palabra en juego
-    for ($i = 0; $i < count($coleccionLetras); $i++) {
-        if ($coleccionLetras[$i]["descubierta"] == false) {
-            $coleccionLetras[$i]["letra"] = "*";
-            echo $coleccionLetras[$i]["letra"] . "   ";
-        }
+    // Armar un nuevo arreglo de letras (modificado) donde las letras son asteriscos y lo muestro por pantalla
+    for ($i = 0; $i < $longitudPalabra; $i++) {
+        $coleccionLetrasModificado[$i] = "*";
+        echo $coleccionLetrasModificado[$i] . "";
     }
+
     echo "\n";
 
     /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
 
-    //Mostrar pista
-    echo "Pista: " . $coleccionPalabras[$indicePalabra]["pista"];
+    // Muestro la pista de la palabra en juego
+    echo "Pista: " . $coleccionPalabras[$indicePalabra]["pista"] . "\n";
 
     //solicitar letras mientras haya intentos y la palabra no haya sido descubierta:
+    while ($cantIntentos > 0 && $palabraFueDescubierta == false) {
+        echo "Ingrese una letra: ";
+        $letra = trim(fgets(STDIN));
+
+        // Verifico la existencia de la letra ingresa en la coleccion de letras desde su funcion correspondiente
+        $existeLetra = existeLetra($coleccionLetras, $letra);
+
+        // Si la letra existe, se destapa la misma en el lugar del arreglo de letras modificado
+        // TODO: agregar que si la letra ya fue descubierta previamente que vuelva a intentar sin haber perdido un intento
+        if ($existeLetra) {
+            $coleccionLetrasModificado = destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra);
+
+            // Muestro por pantalla como va quedando la palabra a medida que se van descubriendo
+            for ($i = 0; $i < count($coleccionLetrasModificado); $i++) {
+                echo $coleccionLetrasModificado[$i] . "";
+            }
+            echo "\n";
+
+        } else {
+            // TODO: dibujarTipito
+            echo "Esa letra no está! \n";
+            $cantIntentos--;
+        }
+
+        $palabraModificada = stringLetrasDescubiertas($coleccionLetrasModificado);
+
+        // TODO: verificar que la palabra modificada sea igual a la palabra en juego
+
+    }
+
+    if ($palabraModificada == $pal) {
+        $palabraFueDescubierta = true;
+    }
 
     if ($palabraFueDescubierta) {
         //obtener puntaje:
@@ -345,15 +413,6 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
     echo "\n";
 }
 
-/**
- * Esta funcion cuenta la cantidad de elementos (palabras) que hay en el arreglo de palabras
- * @return int $cantPalabras
- */
-function contarElementos()
-{
-
-}
-
 /*>>> Implementar las funciones necesarias para la opcion 5 del menú <<<*/
 
 /*>>> Implementar las funciones necesarias para la opcion 6 del menú <<<*/
@@ -377,6 +436,7 @@ $arregloPalabras = cargarPalabras(); // Le asigno el arreglo de palabras
 
 do {
     $opcion = seleccionarOpcion();
+    // La instruccion switch corresponde al tipo de estructura de control alternativo. La misma se la puede reemplazar por un if con varios elseif y un else al final de todas las posibilidades
     switch ($opcion) {
         case 0: // Salida del menu
             echo "Fin del juego! \n";
