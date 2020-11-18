@@ -431,8 +431,10 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
 $cantidadIntentos = 6;
 $minimoPalabras = 0;
 $maximoPalabras = 0;
+$maximoPartidas = 0;
 $puntajeFinal = 0;
 $arregloPalabras = cargarPalabras(); // Le asigno el arreglo de palabras
+$arregloPartidas = cargarJuegos(); // Le asigno el arreglo de partidas jugadas
 
 do {
     $opcion = seleccionarOpcion();
@@ -442,10 +444,16 @@ do {
             echo "Fin del juego! \n";
             break;
         case 1: // Jugar con una palabra aleatoria
+            // Asigno el maximo de elementos a los arreglos de palabras y partidas
             $maximoPalabras = count($arregloPalabras);
+            $maximoPartidas = count($arregloPartidas) + 1;
+
+            // Llamo a la funcion para generar un numero aleatorio e inicia la partida
             $numeroPalabra = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
             $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, $cantidadIntentos);
 
+            // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
+            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
             break;
         case 2: // Jugar con una palabra elegida
 
