@@ -8,12 +8,20 @@
  ******************************************/
 
 /**
- * Esta funcion genera un arreglo asociativo de palabras para jugar
+ * Esta funcion almacena arreglos asociativo de palabras para jugar
  * @return array $coleccionPalabras
  */
 function cargarPalabras()
 {
+    /**
+     * Declaracion de variables
+     * array $coleccionPalabras
+     */
+
+    // Inicializacion de variables
     $coleccionPalabras = [];
+
+    // Predefino valores dentro del arreglo
     $coleccionPalabras[0] = ["palabra" => "papa", "pista" => "se cultiva bajo tierra", "puntosPalabra" => 4];
     $coleccionPalabras[1] = ["palabra" => "hepatitis", "pista" => "enfermedad que inflama el higado", "puntosPalabra" => 7];
     $coleccionPalabras[2] = ["palabra" => "volkswagen", "pista" => "marca de vehiculo", "puntosPalabra" => 10];
@@ -34,7 +42,15 @@ function cargarPalabras()
  */
 function cargarJuegos()
 {
+    /**
+     * Declaracion de variables
+     * array $coleccionJuegos
+     */
+
+    // Inicializacion de variables
     $coleccionJuegos = [];
+
+    // Predefino valores dentro del arreglo
     $coleccionJuegos[0] = ["puntos" => 0, "indicePalabra" => 1];
     $coleccionJuegos[1] = ["puntos" => 10, "indicePalabra" => 2];
     $coleccionJuegos[2] = ["puntos" => 0, "indicePalabra" => 1];
@@ -54,8 +70,10 @@ function cargarJuegos()
  */
 function dividirPalabraEnLetras($palabra)
 {
-    // Declaracion de variables
-    // int $cantLetras. $i
+    /**
+     * Declaracion de variables
+     * int $cantLetras, $i
+     */
 
     // Inicializacion de variables
     $letras = [];
@@ -76,6 +94,15 @@ function dividirPalabraEnLetras($palabra)
  */
 function seleccionarOpcion()
 {
+    /**
+     * Declaracion de variables
+     * int $opcion
+     */
+
+    /**
+     * Menu que se muestra al usuario
+     * Se controla la opcion ingresada desde el programa principal en el switch correspondiete
+     */
     echo "--------------------------------------------------------------\n";
     echo "1) Jugar con una palabra aleatoria. \n";
     echo "2) Jugar con una palabra elegida. \n";
@@ -85,12 +112,12 @@ function seleccionarOpcion()
     echo "6) Mostrar la información completa del primer juego que supere un puntaje. \n";
     echo "7) Mostrar la lista de palabras ordenada por orden alfabético. \n";
     echo "0) Salir del programa. \n";
-
-    // Se controla la opcion ingresada desde el programa principal en el switch correspondiente
-
     echo "--------------------------------------------------------------\n";
+
+    // Ingreso y lectura de la opcion
     echo "Ingrese una opcion: ";
     $opcion = (int) trim(fgets(STDIN));
+
     return $opcion;
 }
 
@@ -102,17 +129,21 @@ function seleccionarOpcion()
  */
 function existePalabra($coleccionPalabras, $palabra)
 {
-    // Declaracion de variables
-    // int $i, $cantPal
-    // boolean $existe
+    /**
+     * Declracion de variables
+     * int $i, $cantPal
+     * boolean $existe
+     */
 
     // Inicializacion de variables
     $i = 0;
     $cantPal = count($coleccionPalabras); // Le asigno la longitud del arreglo de palabras
     $existe = false;
 
-    // Recorro el arreglo de forma parcial, frena en el momento que se encuentre la palabra solicitada
-    // Si existe, retorna true, de lo contrario false
+    /**
+     * Recorro el arreglo de forma parcial, frena en el momento que se encuentre la palabra solicitada
+     * Si existe, retorna true, de lo contrario false
+     */
     while ($i < $cantPal && !$existe) {
         $existe = $coleccionPalabras[$i]["palabra"] == $palabra;
         $i++;
@@ -129,16 +160,20 @@ function existePalabra($coleccionPalabras, $palabra)
  */
 function existeLetra($coleccionLetras, $letra)
 {
-    // Declaracion de variables
-    // int $i
-    // boolean $existe
+    /**
+     * Declaracion de variables
+     * int $i
+     * boolean $existe
+     */
 
     // Inicializo variables
     $i = 0;
     $existe = false;
 
-    // Recorro el arreglo de manera parcial para corroborar la existencia de la letra dentro del mismo
-    // Si existe retorna true
+    /**
+     * Recorro el arreglo de manera parcial para corroborar la existencia de la letra dentro del mismo
+     * Si existe retorna true
+     */
     while ($i < count($coleccionLetras)) {
         if ($coleccionLetras[$i]["letra"] == $letra) {
             $existe = true;
@@ -166,23 +201,25 @@ function existeLetra($coleccionLetras, $letra)
 function indiceAleatorioEntre($min, $max)
 {
     /**
-     * Para utilizar la primer opcion del menu de usuario (palabra aleatoria) se va a generar un numero aleatorio correspondiente a la cantidad de palabras que hay disponibles
+     * Para utilizar la primer opcion del menu de usuario se va a generar un numero aleatorio correspondiente a la cantidad de palabras que hay disponibles
      * Para esto, se va a utilizar la funcion rand. Esta funciom genera un numero entero aleatorio entre otros dos incluidos
      * Por ejemplo, rand(3, 9) va arrojar un numero aleatorio entre 3 y 9 incluidos
      */
 
-    // Declaracion de variables
-    // int $i
+    /**
+     * Declaracion de variables
+     * int $i
+     */
 
     $max = $max - 1; // Le resto 1 a $max para que rand no seleccione un indice fuera de la longitud del arreglo de palabras
 
     $i = rand($min, $max); // Le asigno a $i un numero aleatorio entre el minimo y maximo
 
-    return $i; // Retorno el indice aleatorio
+    return $i;
 }
 
 /**
- * solicitar un valor entre min y max
+ * Esta funcion solicita un valor entre min y max
  * @param int $min
  * @param int $max
  * @return int $i
@@ -200,12 +237,33 @@ function solicitarIndiceEntre($min, $max)
 /**
  * Determinar si la palabra fue descubierta, es decir, todas las letras fueron descubiertas
  * @param array $coleccionLetras
- * @return boolean
+ * @return boolean $palDescubierta
  */
 function palabraDescubierta($coleccionLetras)
 {
+    /**
+     * Declaracion de variables
+     * int $i, $cantLetrasDescubiertas, $cantLetras
+     */
 
+    // Inicializacion de variables
+    $cantLetrasDescubiertas = 0;
+    $cantLetras = count($coleccionLetras);
+    $palDescubierta = false;
     /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
+
+    // Recorro el arreglo verficando que el valor de la clave "descubierta" de todas las letras tenga valor true
+    for ($i = 0; $i < $cantLetras; $i++) {
+        if ($coleccionLetras[$i]["descubierta"] == true) {
+            $cantLetrasDescubiertas++;
+        }
+    }
+
+    if ($cantLetrasDescubiertas == $cantLetras) {
+        $palDescubierta = true;
+    }
+
+    return $palDescubierta;
 }
 
 /**
@@ -215,9 +273,11 @@ function palabraDescubierta($coleccionLetras)
  */
 function solicitarLetra()
 {
-    // Declaracion de variables
-    // boolean $letraCorrecta
-    // String $letra
+    /**
+     * Declaracion de variables
+     * boolean $letraCorrecta
+     * String $letra
+     */
 
     // Inicializacion de variables
     $letraCorrecta = false;
@@ -248,8 +308,10 @@ function solicitarLetra()
  */
 function destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra)
 {
-    // Declaracion de variables
-    // int $i
+    /**
+     * Declaracion de variables
+     * int $i
+     */
 
     /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
 
@@ -270,14 +332,18 @@ function destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra)
  */
 function stringLetrasDescubiertas($coleccionLetras)
 {
-    // Declaracion de variables
-    // int $i
-    // String $pal
+    /**
+     * Declaracion de variables
+     * int $i
+     * String $pal
+     */
 
     // Inicializacion de variables
     $pal = "";
 
     /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
+
+    // Recorro el arreglo armando una palabra concatenando letra por letra
     for ($i = 0; $i < count($coleccionLetras); $i++) {
         $pal = $pal . $coleccionLetras[$i];
     }
@@ -296,11 +362,13 @@ function stringLetrasDescubiertas($coleccionLetras)
  */
 function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
 {
-    // Declaracion de variables
-    // String $letra, $pal, $palabraModificada
-    // array $coleccionLetrasModificado, $coleccionLetras
-    // int $i, $longitudPalabra, $puntaje
-    // boolean $palabraFueDescubierta, $existeLetra
+    /**
+     * Declaracion de variables
+     * array $coleccionLetrasModificado, $coleccionLetras
+     * int $i, $longitudPalabra, $puntaje
+     * boolean $palabraFueDescubierta, $existeLetra
+     * String $letra, $pal, $palabraModificada
+     */
 
     // Inicializacion de variables
     $pal = $coleccionPalabras[$indicePalabra]["palabra"];
@@ -338,6 +406,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             // Muestro por pantalla como va quedando la palabra a medida que se van descubriendo
             for ($i = 0; $i < count($coleccionLetrasModificado); $i++) {
                 echo $coleccionLetrasModificado[$i] . "";
+                $coleccionLetras[$i]["descubierta"] = true;
             }
             echo "\n"; // Salto de linea para mejora visual
 
@@ -348,6 +417,9 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             if ($palabraModificada == $pal) {
                 $palabraFueDescubierta = true;
             }
+
+            // FIXME: Verifico que se hayan descubierto todas las letras en la coleccion de letras principal
+            // $palabraFueDescubierta = palabraDescubierta($coleccionLetras);
         } else {
             // TODO: dibujarTipito
             echo "Esa letra no está! \n";
@@ -400,7 +472,7 @@ function mostrarPalabra($coleccionPalabras, $indicePalabra)
  */
 function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
 {
-    //["puntos"=> 8, "indicePalabra" => 1)
+    // ["puntos"=> 8, "indicePalabra" => 1)
     echo "\n\n";
     echo "<-<-< Juego " . $indiceJuego . " >->->\n";
     echo "  Puntos ganados: " . $coleccionJuegos[$indiceJuego]["puntos"] . "\n";
@@ -419,7 +491,6 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
  * PROGRAMA PRINCIPAL
  * array $arregloPalabras, $arregloPartidas
  * int $cantidadIntentos, $opcion, $minimoPalabras, $maximoPalabras, $numeroPalabra, $puntajeFinal
- *
  */
 // define("CANT_INTENTOS", 6); //Constante en php para cantidad de intentos que tendrá el jugador para adivinar la palabra.
 
