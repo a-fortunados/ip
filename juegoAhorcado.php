@@ -317,10 +317,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
         $coleccionLetrasModificado[$i] = "*";
         echo $coleccionLetrasModificado[$i] . "";
     }
-
     echo "\n";
-
-    /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
 
     // Muestro la pista de la palabra en juego
     echo "Pista: " . $coleccionPalabras[$indicePalabra]["pista"] . "\n";
@@ -342,7 +339,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             for ($i = 0; $i < count($coleccionLetrasModificado); $i++) {
                 echo $coleccionLetrasModificado[$i] . "";
             }
-            echo "\n";
+            echo "\n"; // Salto de linea para mejora visual
 
             // Armo un string nuevo con la palabra modifica a medida que se va descubriendo y la almaceno en su variable correspondiente
             $palabraModificada = stringLetrasDescubiertas($coleccionLetrasModificado);
@@ -351,7 +348,6 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             if ($palabraModificada == $pal) {
                 $palabraFueDescubierta = true;
             }
-
         } else {
             // TODO: dibujarTipito
             echo "Esa letra no está! \n";
@@ -361,7 +357,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
     }
 
     if ($palabraFueDescubierta) {
-        //obtener puntaje:
+        // Calculo el puntaje: es la suma de el puntaje por la palabra en juego más la cantidad de intentos restantes
         $puntaje = $coleccionPalabras[$indicePalabra]["puntosPalabra"] + $cantIntentos;
         echo "\n¡¡¡¡¡¡GANASTE " . $puntaje . " puntos!!!!!!\n";
     } else {
@@ -446,7 +442,7 @@ do {
         case 1: // Jugar con una palabra aleatoria
             // Asigno el maximo de elementos a los arreglos de palabras y partidas
             $maximoPalabras = count($arregloPalabras);
-            $maximoPartidas = count($arregloPartidas) + 1;
+            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Llamo a la funcion para generar un numero aleatorio e inicia la partida
             $numeroPalabra = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
