@@ -417,7 +417,7 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
 
 /**
  * PROGRAMA PRINCIPAL
- * array $arregloPalabras
+ * array $arregloPalabras, $arregloPartidas
  * int $cantidadIntentos, $opcion, $minimoPalabras, $maximoPalabras, $numeroPalabra, $puntajeFinal
  *
  */
@@ -434,7 +434,8 @@ $arregloPartidas = cargarJuegos(); // Le asigno el arreglo de partidas jugadas
 
 do {
     $opcion = seleccionarOpcion();
-    // La instruccion switch corresponde al tipo de estructura de control alternativo. La misma se la puede reemplazar por un if con varios elseif y un else al final de todas las posibilidades
+    // La instruccion switch corresponde al tipo de estructura de control alternativo.
+    // La misma se la puede reemplazar por un if con varios elseif y un else al final de todas las posibilidades.
     switch ($opcion) {
         case 0: // Salida del menu
             echo "Fin del juego! \n";
@@ -452,7 +453,18 @@ do {
             $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
             break;
         case 2: // Jugar con una palabra elegida
+            // Asigno el maximo de elementos a los arreglos de palabras y partidas
+            $maximoPalabras = count($arregloPalabras);
+            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
+            echo "Ingrese un numero entre " . $minimoPalabras . " y " . $maximoPalabras . ": ";
+            $numeroPalabra = (int) trim(fgets(STDIN));
+
+            // Llamo a la funcion para jugar y almaceno el puntaje dentro de su variable correspondiente
+            $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, $cantidadIntentos);
+
+            // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
+            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
             break;
         case 3: // Agregar una palabra al listado
 
