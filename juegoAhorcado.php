@@ -122,6 +122,64 @@ function seleccionarOpcion()
 }
 
 /**
+ * Dibuja el ahorcado según la cantidad de intentos
+ * @param int $intentosRestantes
+ */
+function dibujarMonigote($intentosRestantes)
+{
+    switch ($intentosRestantes) {
+        case 5:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "         |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 4:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo " |       |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 3:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|       |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 2:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|\      |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 1:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|\      |\n";
+            echo "/        |\n";
+            echo "         |";
+            break;
+        case 0:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|\      |\n";
+            echo "/ \      |\n";
+            echo "         |";
+            break;
+    }
+}
+
+/**
  * Determina si una palabra existe en el arreglo de palabras
  * @param array $coleccionPalabras
  * @param string $palabra
@@ -392,8 +450,8 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
 
     //solicitar letras mientras haya intentos y la palabra no haya sido descubierta:
     while ($cantIntentos > 0 && $palabraFueDescubierta == false) {
-        echo "Ingrese una letra: ";
-        $letra = trim(fgets(STDIN));
+
+        $letra = solicitarLetra();
 
         // Verifico la existencia de la letra ingresa en la coleccion de letras desde su funcion correspondiente
         $existeLetra = existeLetra($coleccionLetras, $letra);
@@ -424,6 +482,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             // TODO: dibujarTipito
             echo "Esa letra no está! \n";
             $cantIntentos--;
+            dibujarMonigote($cantIntentos);
             echo "Intentos restantes: " . $cantIntentos . "\n";
         }
     }
