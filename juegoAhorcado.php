@@ -629,8 +629,9 @@ function agregarJuego($coleccionJuegos, $puntos, $indicePalabra)
 function mostrarPalabra($coleccionPalabras, $indicePalabra)
 {
     //$coleccionPalabras[0]= ["palabra"=> "papa" , "pista" => "se cultiva bajo tierra", "puntosPalabra"=>7);
-
-    /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
+    echo "  Palabra: " . $coleccionPalabras[$indicePalabra]["palabra"] . "\n";
+    echo "  Pista: " . $coleccionPalabras[$indicePalabra]["pista"] . "\n";
+    echo "  Puntos: " . $coleccionPalabras[$indicePalabra]["puntosPalabra"] . "\n";
 }
 
 /**
@@ -663,10 +664,6 @@ function listarPalabras($coleccionPalabras)
     }
 }
 
-/*>>> Implementar las funciones necesarias para la opcion 5 del menú <<<*/
-
-/*>>> Implementar las funciones necesarias para la opcion 6 del menú <<<*/
-
 /*>>> Implementar las funciones necesarias para la opcion 7 del menú <<<*/
 
 /**
@@ -685,6 +682,9 @@ $arregloPalabras = cargarPalabras(); // Le asigno el arreglo de palabras
 $arregloPartidas = cargarJuegos(); // Le asigno el arreglo de partidas jugadas
 
 do {
+    // Inicializacion de variables
+    $minimo = 0;
+
     $opcion = seleccionarOpcion();
     // La instruccion switch corresponde al tipo de estructura de control alternativo.
     // La misma se la puede reemplazar por un if con varios elseif y un else al final de todas las posibilidades.
@@ -722,7 +722,15 @@ do {
             $arregloPalabras = agregarPalabra($arregloPalabras);
             break;
         case 4: // Mostrar la información completa de un número de juego
+            $maximoPartidas = count($arregloPartidas);
+            echo "Ingrese un numero entre " . $minimo . " y " . $maximoPartidas . ": ";
+            $numero = (int) trim(fgets(STDIN));
 
+            if ($numero >= 0 && $numero <= $maximoPartidas) {
+                mostrarJuego($arregloPartidas, $arregloPalabras, $numero);
+            } else {
+                echo "Esa partida no se ha jugado! Todavía...";
+            }
             break;
         case 5: // Mostrar la información completa del primer juego con más puntaje
             $maximoPuntaje = buscarMaximo($arregloPartidas);
