@@ -122,6 +122,64 @@ function seleccionarOpcion()
 }
 
 /**
+ * Dibuja el ahorcado según la cantidad de intentos
+ * @param int $intentosRestantes
+ */
+function dibujarMonigote($intentosRestantes)
+{
+    switch ($intentosRestantes) {
+        case 5:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "         |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 4:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo " |       |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 3:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|       |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 2:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|\      |\n";
+            echo "         |\n";
+            echo "         |";
+            break;
+        case 1:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|\      |\n";
+            echo "/        |\n";
+            echo "         |";
+            break;
+        case 0:
+            echo " + - - - +\n";
+            echo " |       |\n";
+            echo " O       |\n";
+            echo "/|\      |\n";
+            echo "/ \      |\n";
+            echo "         |";
+            break;
+    }
+}
+
+/**
  * Determina si una palabra existe en el arreglo de palabras
  * @param array $coleccionPalabras
  * @param string $palabra
@@ -423,6 +481,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             // TODO: dibujarTipito
             echo "Esa letra no está! \n";
             $cantIntentos--;
+            dibujarMonigote($cantIntentos);
             echo "Intentos restantes: " . $cantIntentos . "\n";
         }
     }
