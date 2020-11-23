@@ -282,7 +282,7 @@ function buscarPrimero($coleccionJuegos)
 
     while (!$esMayor && $i < count($coleccionJuegos)) {
         $aux = $coleccionJuegos[$i]["puntos"];
-        if($aux > $puntaje) {
+        if ($aux > $puntaje) {
             $esMayor = true;
             $primerMayor = $aux;
         } else {
@@ -290,7 +290,7 @@ function buscarPrimero($coleccionJuegos)
         }
     }
 
-    if(!$esMayor) {
+    if (!$esMayor) {
         $primerMayor = -1;
     }
 
@@ -637,12 +637,14 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
  * int $cantidadIntentos, $opcion, $minimoPalabras, $maximoPalabras, $numeroPalabra, $puntajeFinal, $maximoPuntaje, $primerMaximo
  */
 define("CANT_INTENTOS", 6); //Constante en php para cantidad de intentos que tendrá el jugador para adivinar la palabra.
+define("MINIMO_ELEMENTOS", 0);
 
 // Inicializacion de variables
 
 $minimo = 0;
 $maximo = 0;
 $maximoJuegos = 0;
+$minimoPalabras = 0;
 $maximoPalabras = 0;
 $maximoPartidas = 0;
 $puntajeFinal = 0;
@@ -667,26 +669,24 @@ do {
             $maximoPartidas += 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Llamo a la funcion para generar un numero aleatorio e inicia la partida
-            $numeroPalabra = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
+            $numeroPalabra = indiceAleatorioEntre(MINIMO_ELEMENTOS, $maximoPalabras);
             $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
 
-
             // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
-            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numero];
+            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
             break;
         case 2: // Jugar con una palabra elegida
             $maximoPartidas += 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Aumento en 1 al minimo y maximo para mejor experiencia de usuario
-            $minimo += 1;
+            $minimo = MINIMO_ELEMENTOS + 1;
             $maximo = $maximoPartidas + 1;
 
             echo "Ingrese un numero entre " . $minimo . " y " . $maximo . ": ";
             $numero = (int) trim(fgets(STDIN));
 
             // Llamo a la funcion para jugar y almaceno el puntaje dentro de su variable correspondiente
-            $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
-
+            $puntajeFinal = jugar($arregloPalabras, $numero, CANT_INTENTOS);
 
             // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
             $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numero];
@@ -699,7 +699,7 @@ do {
             $maximoJuegos = count($arregloPartidas);
 
             // Aumento en 1 al minimo y maximo para mejor experiencia de usuario
-            $minimo += 1;
+            $minimo = MINIMO_ELEMENTOS + 1;
             $maximo = $maximoJuegos + 1;
 
             // Mensaje en pantalla para el usuario
@@ -716,7 +716,7 @@ do {
             break;
         case 6: // Mostrar la información completa del primer juego que supere un puntaje indicado por el usuario
             $primerMaximo = buscarPrimero($arregloPartidas);
-            if($primerMayor == -1) {
+            if ($primerMaximo == -1) {
                 echo "No se encontro un puntaje superior al ingresado \n";
             } else {
                 echo "El primer puntaje que lo supera es: " . $primerMaximo . "\n";
