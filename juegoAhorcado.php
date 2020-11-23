@@ -478,7 +478,6 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             // FIXME: Verifico que se hayan descubierto todas las letras en la coleccion de letras principal
             // $palabraFueDescubierta = palabraDescubierta($coleccionLetras);
         } else {
-            // TODO: dibujarTipito
             echo "Esa letra no está! \n";
             $cantIntentos--;
             dibujarMonigote($cantIntentos);
