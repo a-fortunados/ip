@@ -723,13 +723,13 @@ do {
             break;
         case 4: // Mostrar la información completa de un número de juego
             $maximoPartidas = count($arregloPartidas);
-            echo "Ingrese un numero entre " . $minimo . " y " . $maximoPartidas . ": ";
+            echo "Ingrese un numero entre " . $minimo . " y " . ($maximoPartidas - 1) . ": ";
             $numero = (int) trim(fgets(STDIN));
 
-            if ($numero >= 0 && $numero <= $maximoPartidas) {
+            if ($numero >= 0 && $numero < $maximoPartidas) {
                 mostrarJuego($arregloPartidas, $arregloPalabras, $numero);
             } else {
-                echo "Esa partida no se ha jugado! Todavía...";
+                echo "Esa partida no se ha jugado! Todavía...\n";
             }
             break;
         case 5: // Mostrar la información completa del primer juego con más puntaje
