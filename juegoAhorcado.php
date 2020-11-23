@@ -644,6 +644,7 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
 {
     // ["puntos"=> 8, "indicePalabra" => 1)
     echo "\n\n";
+
     echo "<-<-< Juego " . $indiceJuego . " >->->\n";
     echo "  Puntos ganados: " . $coleccionJuegos[$indiceJuego]["puntos"] . "\n";
     echo "  Información de la palabra:\n";
@@ -723,13 +724,15 @@ do {
             break;
         case 4: // Mostrar la información completa de un número de juego
             $maximoPartidas = count($arregloPartidas);
+            $maximoPartidas -= 1;
+
             echo "Ingrese un numero entre " . $minimo . " y " . $maximoPartidas . ": ";
             $numero = (int) trim(fgets(STDIN));
 
             if ($numero >= 0 && $numero <= $maximoPartidas) {
                 mostrarJuego($arregloPartidas, $arregloPalabras, $numero);
             } else {
-                echo "Esa partida no se ha jugado! Todavía...";
+                echo "Esa partida no se ha jugado! Todavía... \n";
             }
             break;
         case 5: // Mostrar la información completa del primer juego con más puntaje
