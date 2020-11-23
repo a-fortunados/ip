@@ -555,8 +555,6 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
 $cantidadIntentos = 6;
 $minimo = 0;
 $maximo = 0;
-$minimoPalabras = 0;
-$minimoJuegos = 0;
 $maximoJuegos = 0;
 $maximoPalabras = 0;
 $maximoPartidas = 0;
@@ -565,6 +563,11 @@ $arregloPalabras = cargarPalabras(); // Le asigno el arreglo de palabras
 $arregloPartidas = cargarJuegos(); // Le asigno el arreglo de partidas jugadas
 
 do {
+    // Asigno el maximo de elementos de los arreglos de palabras y partidas
+    $maximoPalabras = count($arregloPalabras);
+    $maximoPartidas = count($arregloPartidas);
+
+    // Llamo a la funcion del menu de usuario y almaceno su valor
     $opcion = seleccionarOpcion();
     // La instruccion switch corresponde al tipo de estructura de control alternativo.
     // La misma se la puede reemplazar por un if con varios elseif y un else al final de todas las posibilidades.
@@ -573,9 +576,7 @@ do {
             echo "Fin del juego! \n";
             break;
         case 1: // Jugar con una palabra aleatoria
-            // Asigno el maximo de elementos a los arreglos de palabras y partidas
-            $maximoPalabras = count($arregloPalabras);
-            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
+            $maximoPartidas += 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Llamo a la funcion para generar un numero aleatorio e inicia la partida
             $numero = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
@@ -585,13 +586,11 @@ do {
             $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numero];
             break;
         case 2: // Jugar con una palabra elegida
-            // Asigno el maximo de elementos a los arreglos de palabras y partidas
-            $maximoPalabras = count($arregloPalabras);
-            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
+            $maximoPartidas += 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Aumento en 1 al minimo y maximo para mejor experiencia de usuario
             $minimo += 1;
-            $maximo = $maximoJuegos + 1;
+            $maximo = $maximoPartidas + 1;
 
             echo "Ingrese un numero entre " . $minimo . " y " . $maximo . ": ";
             $numero = (int) trim(fgets(STDIN));
@@ -617,7 +616,7 @@ do {
             echo "Ingrese un numero entre " . $minimo . " y " . $maximo . ": ";
             $numero = (int) trim(fgets(STDIN));
 
-            echo "Partida nro " . $numero . "\n";
+            echo "Partida número " . $numero . "\n";
             echo "Puntaje: " . $arregloPartidas[$numero]["puntos"] . "\n";
             echo "Se jugó con la palabra: " . $arregloPalabras[$numero]["palabra"] . "\n";
             break;
