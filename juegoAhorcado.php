@@ -1,10 +1,9 @@
 <?php
 /******************************************
- * TODO: Agregar legajos una vez terminado el TP
  * NOMBRE Y APELLIDOS - LEGAJOS
- * Gonzalez, Juan Marcos - FAI-
- * Graff, Rocio Gisel - FAI-
- * Scantamburlo, Santiago - FAI-
+ * Gonzalez, Juan Marcos - FAI-1204
+ * Graff, Rocio Gisel - FAI-2158
+ * Scantamburlo, Santiago - FAI-2238
  ******************************************/
 
 /**
@@ -31,8 +30,6 @@ function cargarPalabras()
     $coleccionPalabras[6] = ["palabra" => "rompecabezas", "pista" => "es un juego de mesa", "puntosPalabra" => 7];
     $coleccionPalabras[7] = ["palabra" => "salvavidas", "pista" => "te ayuda a flotar en el agua", "puntosPalabra" => 7];
 
-    // TODO: se podria agregar 3-4 palabras mas
-
     return $coleccionPalabras;
 }
 
@@ -56,7 +53,7 @@ function agregarPalabra($coleccionPalabras)
         if ($existe) {
             echo "La palabra ingresada ya existe! \n";
         } else {
-            echo "Ingrese la pista para la palabra: \n";
+            echo "Ingrese la pista para la palabra: ";
             $pista = strtolower(trim(fgets(STDIN)));
             echo "Ingrese el puntaje para la palabra: ";
             $puntaje = trim(fgets(STDIN));
@@ -137,7 +134,7 @@ function seleccionarOpcion()
     echo "--------------------------------------------------------------\n";
     echo "1) Jugar con una palabra aleatoria. \n";
     echo "2) Jugar con una palabra elegida. \n";
-    echo "3) Agregar una palabra la listado. \n";
+    echo "3) Agregar una palabra al listado. \n";
     echo "4) Mostrar la información completa de un número de juego. \n";
     echo "5) Mostrar la información completa del primer juego con más puntaje. \n";
     echo "6) Mostrar la información completa del primer juego que supere un puntaje. \n";
@@ -165,7 +162,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "         |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 4:
             echo " + - - - +\n";
@@ -173,7 +170,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo " |       |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 3:
             echo " + - - - +\n";
@@ -181,7 +178,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|       |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 2:
             echo " + - - - +\n";
@@ -189,7 +186,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|\      |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 1:
             echo " + - - - +\n";
@@ -197,7 +194,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|\      |\n";
             echo "/        |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 0:
             echo " + - - - +\n";
@@ -205,7 +202,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|\      |\n";
             echo "/ \      |\n";
-            echo "         |";
+            echo "         |\n";
             break;
     }
 }
@@ -372,7 +369,7 @@ function indiceAleatorioEntre($min, $max)
 function solicitarIndiceEntre($min, $max)
 {
     do {
-        echo "Seleccione un valor entre $min y $max: ";
+        echo "Seleccione un valor entre ", $min, " y ", $max, ": ";
         $i = (int) trim(fgets(STDIN));
     } while (!($i >= $min && $i <= $max));
 
@@ -546,7 +543,6 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             $existeLetra = existeLetra($coleccionLetras, $letra);
 
             // Si la letra existe, se destapa la misma en el lugar del arreglo de letras modificado
-            // TODO: agregar que si la letra ya fue descubierta previamente que vuelva a intentar sin haber perdido un intento
             if ($existeLetra) {
                 $coleccionLetrasModificado = destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra);
 
@@ -615,7 +611,7 @@ function verificarIngreso($coleccionLetrasIngresadas, $let)
 /**
  * Agrega un nuevo juego al arreglo de juegos
  * @param array $coleccionJuegos
- * @param int $ptos
+ * @param int $puntos
  * @param int $indicePalabra
  * @return array coleccion de juegos modificada
  */
@@ -633,8 +629,9 @@ function agregarJuego($coleccionJuegos, $puntos, $indicePalabra)
 function mostrarPalabra($coleccionPalabras, $indicePalabra)
 {
     //$coleccionPalabras[0]= ["palabra"=> "papa" , "pista" => "se cultiva bajo tierra", "puntosPalabra"=>7);
-
-    /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
+    echo "  Palabra: " . $coleccionPalabras[$indicePalabra]["palabra"] . "\n";
+    echo "  Pista: " . $coleccionPalabras[$indicePalabra]["pista"] . "\n";
+    echo "  Puntos: " . $coleccionPalabras[$indicePalabra]["puntosPalabra"] . "\n";
 }
 
 /**
@@ -654,9 +651,18 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
     echo "\n";
 }
 
-/*>>> Implementar las funciones necesarias para la opcion 5 del menú <<<*/
+/**
+ * Ordena al arreglo de palabras de forma alfabetica y lo muestra por pantalla
+ * @param array $coleccionPalabras
+ */
+function listarPalabras($coleccionPalabras)
+{
+    sort($coleccionPalabras);
 
-/*>>> Implementar las funciones necesarias para la opcion 6 del menú <<<*/
+    for ($i = 0; $i < count($coleccionPalabras); $i++) {
+        echo $coleccionPalabras[$i]["palabra"] . "\n";
+    }
+}
 
 /*>>> Implementar las funciones necesarias para la opcion 7 del menú <<<*/
 
@@ -686,14 +692,14 @@ do {
         case 1: // Jugar con una palabra aleatoria
             // Asigno el maximo de elementos a los arreglos de palabras y partidas
             $maximoPalabras = count($arregloPalabras);
-            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
+            $maximoPartidas = count($arregloPartidas); // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Llamo a la funcion para generar un numero aleatorio e inicia la partida
             $numeroPalabra = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
             $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
 
             // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
-            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
+            $arregloPartidas = agregarJuego($arregloPartidas, $puntajeFinal, $maximoPartidas);
             break;
         case 2: // Jugar con una palabra elegida
             // Asigno el maximo de elementos a los arreglos de palabras y partidas
@@ -707,7 +713,7 @@ do {
             $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
 
             // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
-            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
+            $arregloPartidas = agregarJuego($arregloPartidas, $puntajeFinal, $maximoPartidas);
             break;
         case 3: // Agregar una palabra al listado
             $arregloPalabras = agregarPalabra($arregloPalabras);
@@ -728,7 +734,7 @@ do {
             }
             break;
         case 7: // Mostrar la lista de palabras ordenada por orden alfabetico
-
+            listarPalabras($arregloPalabras);
             break;
         default:
             echo "Opcion incorrecta. Verifique por favor. \n";
