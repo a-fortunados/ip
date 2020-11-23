@@ -552,7 +552,6 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
 // define("CANT_INTENTOS", 6); //Constante en php para cantidad de intentos que tendrá el jugador para adivinar la palabra.
 
 // Inicializacion de variables
-$cantidadIntentos = 6;
 $minimo = 0;
 $maximo = 0;
 $maximoJuegos = 0;
@@ -566,6 +565,7 @@ do {
     // Asigno el maximo de elementos de los arreglos de palabras y partidas
     $maximoPalabras = count($arregloPalabras);
     $maximoPartidas = count($arregloPartidas);
+    $cantidadIntentos = 6;
 
     // Llamo a la funcion del menu de usuario y almaceno su valor
     $opcion = seleccionarOpcion();
