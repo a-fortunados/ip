@@ -509,9 +509,9 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
 {
     /**
      * Declaracion de variables
-     * array $coleccionLetrasModificado, $coleccionLetras
+     * array $coleccionLetrasModificado, $coleccionLetras, $coleccionLetrasIngresadas
      * int $i, $longitudPalabra, $puntaje
-     * boolean $palabraFueDescubierta, $existeLetra
+     * boolean $palabraFueDescubierta, $existeLetra, $letraYaIngresada
      * String $letra, $pal, $palabraModificada
      */
 
@@ -521,6 +521,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
     $coleccionLetras = dividirPalabraEnLetras($pal);
     $longitudPalabra = count($coleccionLetras);
     $coleccionLetrasModificado = [];
+    $coleccionLetrasIngresadas = [];
     $existeLetra = false;
     $puntaje = 0;
     $palabraFueDescubierta = false;
@@ -538,38 +539,40 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
     //solicitar letras mientras haya intentos y la palabra no haya sido descubierta:
     while ($cantIntentos > 0 && $palabraFueDescubierta == false) {
         $letra = solicitarLetra();
+        $letraYaIngresada = verificarIngreso($coleccionLetrasIngresadas, $letra);
+        if (!$letraYaIngresada) {
+            $coleccionLetrasIngresadas[count($coleccionLetrasIngresadas)] = $letra;
+            // Verifico la existencia de la letra ingresa en la coleccion de letras desde su funcion correspondiente
+            $existeLetra = existeLetra($coleccionLetras, $letra);
 
-        // Verifico la existencia de la letra ingresa en la coleccion de letras desde su funcion correspondiente
-        $existeLetra = existeLetra($coleccionLetras, $letra);
+            // Si la letra existe, se destapa la misma en el lugar del arreglo de letras modificado
+            // TODO: agregar que si la letra ya fue descubierta previamente que vuelva a intentar sin haber perdido un intento
+            if ($existeLetra) {
+                $coleccionLetrasModificado = destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra);
 
-        // Si la letra existe, se destapa la misma en el lugar del arreglo de letras modificado
-        // TODO: agregar que si la letra ya fue descubierta previamente que vuelva a intentar sin haber perdido un intento
-        if ($existeLetra) {
-            $coleccionLetrasModificado = destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra);
+                // Muestro por pantalla como va quedando la palabra a medida que se van descubriendo
+                for ($i = 0; $i < count($coleccionLetrasModificado); $i++) {
+                    echo $coleccionLetrasModificado[$i] . "";
+                    $coleccionLetras[$i]["descubierta"] = true;
+                }
+                echo "\n"; // Salto de linea para mejora visual
 
-            // Muestro por pantalla como va quedando la palabra a medida que se van descubriendo
-            for ($i = 0; $i < count($coleccionLetrasModificado); $i++) {
-                echo $coleccionLetrasModificado[$i] . "";
-                $coleccionLetras[$i]["descubierta"] = true;
+                // Armo un string nuevo con la palabra modifica a medida que se va descubriendo y la almaceno en su variable correspondiente
+                $palabraModificada = stringLetrasDescubiertas($coleccionLetrasModificado);
+
+                // Verifico que la palabra modificada sea igual a la palabra en juego
+                if ($palabraModificada == $pal) {
+                    $palabraFueDescubierta = true;
+                }
+
+                // FIXME: Verifico que se hayan descubierto todas las letras en la coleccion de letras principal
+                // $palabraFueDescubierta = palabraDescubierta($coleccionLetras);
+            } else {
+                echo "Esa letra no está! \n";
+                $cantIntentos--;
+                dibujarMonigote($cantIntentos);
+                echo "Intentos restantes: " . $cantIntentos . "\n";
             }
-            echo "\n"; // Salto de linea para mejora visual
-
-            // Armo un string nuevo con la palabra modifica a medida que se va descubriendo y la almaceno en su variable correspondiente
-            $palabraModificada = stringLetrasDescubiertas($coleccionLetrasModificado);
-
-            // Verifico que la palabra modificada sea igual a la palabra en juego
-            if ($palabraModificada == $pal) {
-                $palabraFueDescubierta = true;
-            }
-
-            // FIXME: Verifico que se hayan descubierto todas las letras en la coleccion de letras principal
-            // $palabraFueDescubierta = palabraDescubierta($coleccionLetras);
-        } else {
-            echo "Esa letra no está! \n";
-            $cantIntentos--;
-            dibujarMonigote($cantIntentos);
-            echo "Intentos restantes: " . $cantIntentos . "\n";
-        }
     }
 
     if ($palabraFueDescubierta) {
@@ -581,6 +584,29 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
     }
 
     return $puntaje;
+}
+
+/**
+ * Agrega la letra ingresada al arreglo
+ * @param array $coleccionLetrasIngresadas
+ * @param array $let
+ * @return array $coleccionLetrasIngresadas
+ */
+function verificarIngreso($coleccionLetrasIngresadas, $let)
+{
+    /**
+     * boolean $existe
+     * int $i
+     */
+    $existe = false;
+    $i = 0;
+    while (!$existe && $i < count($coleccionLetrasIngresadas)) {
+        $existe = $coleccionLetrasIngresadas[$i] == $let;
+        if (!$existe) {
+            $i++;
+        }
+    }
+    return $existe;
 }
 
 /**
