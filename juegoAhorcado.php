@@ -546,7 +546,6 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
             $existeLetra = existeLetra($coleccionLetras, $letra);
 
             // Si la letra existe, se destapa la misma en el lugar del arreglo de letras modificado
-            // TODO: agregar que si la letra ya fue descubierta previamente que vuelva a intentar sin haber perdido un intento
             if ($existeLetra) {
                 $coleccionLetrasModificado = destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra);
 
@@ -615,7 +614,7 @@ function verificarIngreso($coleccionLetrasIngresadas, $let)
 /**
  * Agrega un nuevo juego al arreglo de juegos
  * @param array $coleccionJuegos
- * @param int $ptos
+ * @param int $puntos
  * @param int $indicePalabra
  * @return array coleccion de juegos modificada
  */
@@ -686,14 +685,14 @@ do {
         case 1: // Jugar con una palabra aleatoria
             // Asigno el maximo de elementos a los arreglos de palabras y partidas
             $maximoPalabras = count($arregloPalabras);
-            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
+            $maximoPartidas = count($arregloPartidas); // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Llamo a la funcion para generar un numero aleatorio e inicia la partida
             $numeroPalabra = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
             $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
 
             // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
-            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
+            $arregloPartidas = agregarJuego($arregloPartidas, $puntajeFinal, $maximoPartidas);
             break;
         case 2: // Jugar con una palabra elegida
             // Asigno el maximo de elementos a los arreglos de palabras y partidas
@@ -707,7 +706,7 @@ do {
             $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
 
             // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
-            $arregloPartidas[$maximoPartidas] = ["puntos" => $puntajeFinal, "indicePalabra" => $numeroPalabra];
+            $arregloPartidas = agregarJuego($arregloPartidas, $puntajeFinal, $maximoPartidas);
             break;
         case 3: // Agregar una palabra al listado
             $arregloPalabras = agregarPalabra($arregloPalabras);
