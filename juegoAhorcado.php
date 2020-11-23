@@ -1,10 +1,9 @@
 <?php
 /******************************************
- * TODO: Agregar legajos una vez terminado el TP
  * NOMBRE Y APELLIDOS - LEGAJOS
- * Gonzalez, Juan Marcos - FAI-
- * Graff, Rocio Gisel - FAI-
- * Scantamburlo, Santiago - FAI-
+ * Gonzalez, Juan Marcos - FAI-1204
+ * Graff, Rocio Gisel - FAI-2158
+ * Scantamburlo, Santiago - FAI-2238
  ******************************************/
 
 /**
@@ -31,8 +30,6 @@ function cargarPalabras()
     $coleccionPalabras[6] = ["palabra" => "rompecabezas", "pista" => "es un juego de mesa", "puntosPalabra" => 7];
     $coleccionPalabras[7] = ["palabra" => "salvavidas", "pista" => "te ayuda a flotar en el agua", "puntosPalabra" => 7];
 
-    // TODO: se podria agregar 3-4 palabras mas
-
     return $coleccionPalabras;
 }
 
@@ -56,7 +53,7 @@ function agregarPalabra($coleccionPalabras)
         if ($existe) {
             echo "La palabra ingresada ya existe! \n";
         } else {
-            echo "Ingrese la pista para la palabra: \n";
+            echo "Ingrese la pista para la palabra: ";
             $pista = strtolower(trim(fgets(STDIN)));
             echo "Ingrese el puntaje para la palabra: ";
             $puntaje = trim(fgets(STDIN));
@@ -137,7 +134,7 @@ function seleccionarOpcion()
     echo "--------------------------------------------------------------\n";
     echo "1) Jugar con una palabra aleatoria. \n";
     echo "2) Jugar con una palabra elegida. \n";
-    echo "3) Agregar una palabra la listado. \n";
+    echo "3) Agregar una palabra al listado. \n";
     echo "4) Mostrar la información completa de un número de juego. \n";
     echo "5) Mostrar la información completa del primer juego con más puntaje. \n";
     echo "6) Mostrar la información completa del primer juego que supere un puntaje. \n";
@@ -165,7 +162,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "         |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 4:
             echo " + - - - +\n";
@@ -173,7 +170,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo " |       |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 3:
             echo " + - - - +\n";
@@ -181,7 +178,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|       |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 2:
             echo " + - - - +\n";
@@ -189,7 +186,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|\      |\n";
             echo "         |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 1:
             echo " + - - - +\n";
@@ -197,7 +194,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|\      |\n";
             echo "/        |\n";
-            echo "         |";
+            echo "         |\n";
             break;
         case 0:
             echo " + - - - +\n";
@@ -205,7 +202,7 @@ function dibujarMonigote($intentosRestantes)
             echo " O       |\n";
             echo "/|\      |\n";
             echo "/ \      |\n";
-            echo "         |";
+            echo "         |\n";
             break;
     }
 }
@@ -372,7 +369,7 @@ function indiceAleatorioEntre($min, $max)
 function solicitarIndiceEntre($min, $max)
 {
     do {
-        echo "Seleccione un valor entre $min y $max: ";
+        echo "Seleccione un valor entre ", $min, " y ", $max, ": ";
         $i = (int) trim(fgets(STDIN));
     } while (!($i >= $min && $i <= $max));
 
@@ -653,6 +650,19 @@ function mostrarJuego($coleccionJuegos, $coleccionPalabras, $indiceJuego)
     echo "\n";
 }
 
+/**
+ * Ordena al arreglo de palabras de forma alfabetica y lo muestra por pantalla
+ * @param array $coleccionPalabras
+ */
+function listarPalabras($coleccionPalabras)
+{
+    sort($coleccionPalabras);
+
+    for ($i = 0; $i < count($coleccionPalabras); $i++) {
+        echo $coleccionPalabras[$i]["palabra"] . "\n";
+    }
+}
+
 /*>>> Implementar las funciones necesarias para la opcion 5 del menú <<<*/
 
 /*>>> Implementar las funciones necesarias para la opcion 6 del menú <<<*/
@@ -727,7 +737,7 @@ do {
             }
             break;
         case 7: // Mostrar la lista de palabras ordenada por orden alfabetico
-
+            listarPalabras($arregloPalabras);
             break;
         default:
             echo "Opcion incorrecta. Verifique por favor. \n";
