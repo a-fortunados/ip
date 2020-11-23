@@ -38,7 +38,7 @@ function cargarPalabras()
 
 /**
  * Esta funcion almacena distintas partidas que se jugaron junto con el puntaje y la palabra con la que se jugó
- *
+ * @return $coleccionJuegos
  */
 function cargarJuegos()
 {
@@ -450,7 +450,6 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
 
     //solicitar letras mientras haya intentos y la palabra no haya sido descubierta:
     while ($cantIntentos > 0 && $palabraFueDescubierta == false) {
-
         $letra = solicitarLetra();
 
         // Verifico la existencia de la letra ingresa en la coleccion de letras desde su funcion correspondiente
