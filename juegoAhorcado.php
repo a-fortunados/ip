@@ -50,16 +50,17 @@ function agregarPalabra($coleccionPalabras)
     do {
         echo "Ingrese una nueva palabra: ";
         $nuevaPalabra = strtolower(trim(fgets(STDIN)));
-        $existe = existePalabra($coleccionPalabras, $nuevaPalabra);
+        $existe = existePalabra($coleccionPalabras, $nuevaPalabra); // Verifico si la nueva palabra existe en la coleccion de palabras
+
         if ($existe) {
             echo "La palabra ingresada ya existe! \n";
         } else {
             echo "Ingrese la pista para la palabra: ";
             $pista = strtolower(trim(fgets(STDIN)));
             echo "Ingrese el puntaje para la palabra: ";
-            $puntaje = trim(fgets(STDIN));
+            $puntaje = (int) trim(fgets(STDIN));
 
-            $coleccionPalabras[count($coleccionPalabras)] = ["palabra" => $nuevaPalabra, "pista" => $pista, "puntosPalabra" => $puntaje];
+            $coleccionPalabras[count($coleccionPalabras)] = ["palabra" => $nuevaPalabra, "pista" => $pista, "puntosPalabra" => $puntaje]; // Agrego la palabra la coleccion
         }
     } while ($existe);
     return $coleccionPalabras;
@@ -275,7 +276,7 @@ function buscarPrimero($coleccionJuegos)
     $i = 0;
     do {
         echo "Ingrese el puntaje que desea comparar: ";
-        $puntaje = trim(fgets(STDIN));
+        $puntaje = (int) trim(fgets(STDIN));
     } while ($puntaje < 0);
 
     while (!$esMayor && $i < count($coleccionJuegos)) {
@@ -393,7 +394,6 @@ function palabraDescubierta($coleccionLetras)
     $cantLetrasDescubiertas = 0;
     $cantLetras = count($coleccionLetras);
     $palDescubierta = false;
-    /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
 
     // Recorro el arreglo verficando que el valor de la clave "descubierta" de todas las letras tenga valor true
     for ($i = 0; $i < $cantLetras; $i++) {
@@ -456,8 +456,6 @@ function destaparLetra($coleccionLetras, $coleccionLetrasModificado, $letra)
      * int $i
      */
 
-    /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
-
     // Recorro el arreglo buscando las incidencias de la letra ingresada y remplazo el * por su letra correspondiente
     for ($i = 0; $i < count($coleccionLetras); $i++) {
         if ($coleccionLetras[$i]["letra"] == $letra) {
@@ -483,8 +481,6 @@ function stringLetrasDescubiertas($coleccionLetras)
 
     // Inicializacion de variables
     $pal = "";
-
-    /*>>> Completar el cuerpo de la función, respetando lo indicado en la documentacion <<<*/
 
     // Recorro el arreglo armando una palabra concatenando letra por letra
     for ($i = 0; $i < count($coleccionLetras); $i++) {
@@ -561,9 +557,6 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
                 if ($palabraModificada == $pal) {
                     $palabraFueDescubierta = true;
                 }
-
-                // FIXME: Verifico que se hayan descubierto todas las letras en la coleccion de letras principal
-                // $palabraFueDescubierta = palabraDescubierta($coleccionLetras);
             } else {
                 echo "Esa letra no está! \n";
                 $cantIntentos--;
@@ -666,8 +659,6 @@ function listarPalabras($coleccionPalabras)
     }
 }
 
-/*>>> Implementar las funciones necesarias para la opcion 7 del menú <<<*/
-
 /**
  * PROGRAMA PRINCIPAL
  * array $arregloPalabras, $arregloPartidas
@@ -676,7 +667,6 @@ function listarPalabras($coleccionPalabras)
 define("CANT_INTENTOS", 6); //Constante en php para cantidad de intentos que tendrá el jugador para adivinar la palabra.
 
 // Inicializacion de variables
-$minimoPalabras = 0;
 $maximoPalabras = 0;
 $maximoPartidas = 0;
 $puntajeFinal = 0;
@@ -700,7 +690,7 @@ do {
             $maximoPartidas = count($arregloPartidas); // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             // Llamo a la funcion para generar un numero aleatorio e inicia la partida
-            $numeroPalabra = indiceAleatorioEntre($minimoPalabras, $maximoPalabras);
+            $numeroPalabra = indiceAleatorioEntre($minimo, $maximoPalabras);
             $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
 
             // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
@@ -711,7 +701,7 @@ do {
             $maximoPalabras = count($arregloPalabras);
             $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
-            echo "Ingrese un numero entre " . $minimoPalabras . " y " . $maximoPalabras . ": ";
+            echo "Ingrese un numero entre " . $minimo . " y " . $maximoPalabras . ": ";
             $numeroPalabra = (int) trim(fgets(STDIN));
 
             // Llamo a la funcion para jugar y almaceno el puntaje dentro de su variable correspondiente
