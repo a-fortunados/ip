@@ -565,7 +565,7 @@ function jugar($coleccionPalabras, $indicePalabra, $cantIntentos)
         $puntaje = $coleccionPalabras[$indicePalabra]["puntosPalabra"] + $cantIntentos;
         echo "\n¡¡¡¡¡¡GANASTE " . $puntaje . " puntos!!!!!!\n";
     } else {
-        echo "\n¡¡¡¡¡¡AHORCADO AHORCADO!!!!!!\n";
+        echo "\n¡¡¡¡¡¡AHORCADO!!!!!!\n";
     }
 
     return $puntaje;
