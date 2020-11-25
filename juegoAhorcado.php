@@ -329,14 +329,6 @@ function existeLetra($coleccionLetras, $letra)
 }
 
 /**
- * Solicita los datos correspondientes a un elemento de la coleccion de palabras: palabra, pista y puntaje.
- * Internamente la función también verifica que la palabra ingresada por el usuario no exista en la colección de palabras.
- * @param array $coleccionPalabras
- * @return array  colección de palabras modificada con la nueva palabra.
- */
-/*>>> Completar la interfaz y cuerpo de la función. Debe respetar la documentación <<<*/
-
-/**
  * Esta funcion obtiene un indice aleatorio del arreglo de palabras
  * @param int $min
  * @param int $max
