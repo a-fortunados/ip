@@ -603,7 +603,7 @@ function verificarIngreso($coleccionLetrasIngresadas, $let)
  */
 function agregarJuego($coleccionJuegos, $puntos, $indicePalabra)
 {
-    $coleccionJuegos[] = ["puntos" => $puntos, "indicePalabra" => $indicePalabra];
+    $coleccionJuegos[count($coleccionJuegos)] = ["puntos" => $puntos, "indicePalabra" => $indicePalabra];
     return $coleccionJuegos;
 }
 
