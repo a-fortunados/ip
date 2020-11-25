@@ -739,4 +739,4 @@ do {
     }
 } while ($opcion != 0);
 
-echo "Gracias por haber jugado con nosotros!";
+echo "Gracias por jugar con nosotros!";
