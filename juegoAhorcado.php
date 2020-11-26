@@ -82,7 +82,7 @@ function cargarJuegos()
 
     // Predefino valores dentro del arreglo
     $coleccionJuegos[0] = ["puntos" => 0, "indicePalabra" => 1];
-    $coleccionJuegos[1] = ["puntos" => 10, "indicePalabra" => 2];
+    $coleccionJuegos[1] = ["puntos" => 6, "indicePalabra" => 2];
     $coleccionJuegos[2] = ["puntos" => 0, "indicePalabra" => 1];
     $coleccionJuegos[3] = ["puntos" => 8, "indicePalabra" => 0];
     $coleccionJuegos[4] = ["puntos" => 8, "indicePalabra" => 6];
@@ -691,16 +691,21 @@ do {
         case 2: // Jugar con una palabra elegida
             // Asigno el maximo de elementos a los arreglos de palabras y partidas
             $maximoPalabras = count($arregloPalabras);
-            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
+            $maximoPartidas = count($arregloPartidas); // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             echo "Ingrese un numero entre " . $minimo . " y " . $maximoPalabras . ": ";
             $numeroPalabra = (int) trim(fgets(STDIN));
 
-            // Llamo a la funcion para jugar y almaceno el puntaje dentro de su variable correspondiente
-            $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
+            if ($numeroPalabra >= $minimo && $numeroPalabra <= $maximoPalabras) {
+                // Llamo a la funcion para jugar y almaceno el puntaje dentro de su variable correspondiente
+                $puntajeFinal = jugar($arregloPalabras, $numeroPalabra, CANT_INTENTOS);
 
-            // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
-            $arregloPartidas = agregarJuego($arregloPartidas, $puntajeFinal, $maximoPartidas);
+                // Guardo el puntaje generado y la palabra con la que se jugó en la coleccion de partidas
+                $arregloPartidas = agregarJuego($arregloPartidas, $puntajeFinal, $maximoPartidas);
+            } else {
+                echo "Opción incorrecta. Verifique por favor! \n";
+            }
+
             break;
         case 3: // Agregar una palabra al listado
             $arregloPalabras = agregarPalabra($arregloPalabras);
