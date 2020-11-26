@@ -646,9 +646,10 @@ function listarPalabras($coleccionPalabras)
 {
     sort($coleccionPalabras);
 
-    for ($i = 0; $i < count($coleccionPalabras); $i++) {
-        echo $coleccionPalabras[$i]["palabra"] . "\n";
-    }
+    print_r($coleccionPalabras);
+    //for ($i = 0; $i < count($coleccionPalabras); $i++) {
+    //echo $coleccionPalabras[$i]["palabra"] . "\n";
+    //}
 }
 
 /**
@@ -690,8 +691,8 @@ do {
             break;
         case 2: // Jugar con una palabra elegida
             // Asigno el maximo de elementos a los arreglos de palabras y partidas
-            $maximoPalabras = count($arregloPalabras);
-            $maximoPartidas = count($arregloPartidas); // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
+            $maximoPalabras = count($arregloPalabras) - 1; // Se le resta 1 a $maximoPalabras para marcar el umbral maximo de un valor a ingresar
+            $maximoPartidas = count($arregloPartidas) + 1; // Se le suma 1 a $maximoPartidas para luego insertar una nueva partida en el siguente indice
 
             echo "Ingrese un numero entre " . $minimo . " y " . $maximoPalabras . ": ";
             $numeroPalabra = (int) trim(fgets(STDIN));
@@ -744,4 +745,5 @@ do {
     }
 } while ($opcion != 0);
 
-echo "Gracias por jugar con nosotros!";
+echo "Gracias por jugar con nosotros! \n";
+echo "Su puntaje final es: " . $puntajeFinal . "\n";
